@@ -1,0 +1,43 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Clean
+      run: dotnet clean && dotnet nuget locals all --clear
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover --no-build --verbosity normal
+
+    - name: Create code coverage badge
+      uses: simon-k/dotnet-code-coverage-badge@v1.0.0
+      id: code_coverage_badge
+      with:
+        label: coverage
+        color: brightgreen
+        path: tests/Toimik.CommonCrawl.Tests/coverage.opencover.xml
+        gist-filename: CommonCrawl-coverage.json
+        gist-id: 66904bd88c3b6c6113fedcfd438fe17c
+        gist-auth-token: ${{ secrets.GIST_AUTH_TOKEN }}
