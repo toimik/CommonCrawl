@@ -1,4 +1,6 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/toimik/CommonCrawl/CI)
+![Code Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/nurhafiz/66904bd88c3b6c6113fedcfd438fe17c/raw/CommonCrawl-coverage.json)
+![Nuget](https://img.shields.io/nuget/v/Toimik.CommonCrawl)
 
 # Toimik.CommonCrawl
 
