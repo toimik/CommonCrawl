@@ -32,8 +32,8 @@ namespace Toimik.CommonCrawl
         /// <summary>
         /// Initializes a new instance of the <see cref="WarcParserStreamer"/>.
         /// </summary>
-        /// <param name="httpMessageHandler">
-        /// Reference for <see cref="HttpMessageHandler"/>.
+        /// <param name="httpClient">
+        /// Reference for <see cref="Streamer{T}.HttpClient"/>.
         /// </param>
         /// <param name="parser">
         /// Reference for <see cref="Parser"/>.
@@ -42,10 +42,10 @@ namespace Toimik.CommonCrawl
         /// Reference for <see cref="ParseLog"/>.
         /// </param>
         public WarcParserStreamer(
-            HttpMessageHandler httpMessageHandler,
+            HttpClient httpClient,
             WarcParser parser,
             IParseLog parseLog)
-            : base(httpMessageHandler)
+            : base(httpClient)
         {
             Parser = parser;
             ParseLog = parseLog;

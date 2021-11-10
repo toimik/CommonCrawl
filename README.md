@@ -41,7 +41,7 @@ class Program
     static async Task Main(string[] args)
     {
         var streamer = new WarcParserStreamer(
-            new SocketsHttpHandler(),
+            new HttpClient(), // Ideally a singleton
             new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
             new DebugParseLog());
 

@@ -18,7 +18,6 @@ namespace Toimik.CommonCrawl
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
@@ -34,27 +33,20 @@ namespace Toimik.CommonCrawl
     /// cumulative size adds up to petabytes. As such, it is more practical and time-saving to
     /// process those files via streaming instead of downloading them first.
     /// </remarks>
-    public abstract class Streamer<T> : IDisposable
+    public abstract class Streamer<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Streamer"/> class that streams over HTTPS.
         /// </summary>
-        /// <param name="httpMessageHandler">
-        /// Message handler used by the internal <see cref="HttpClient"/>.
+        /// <param name="httpClient">
+        /// The <see cref="System.Net.Http.HttpClient"/> used to make HTTP requests.
         /// </param>
-        protected Streamer(HttpMessageHandler httpMessageHandler)
+        protected Streamer(HttpClient httpClient)
         {
-            HttpClient = new HttpClient(httpMessageHandler);
+            HttpClient = httpClient;
         }
 
-        protected HttpClient HttpClient { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        public HttpClient HttpClient { get; }
 
         /// <summary>
         /// Streams the records found in every dataset listed in the specified HTTPS location.
@@ -181,17 +173,6 @@ namespace Toimik.CommonCrawl
         }
 
         protected abstract Stream Decompress(Stream stream);
-
-        [ExcludeFromCodeCoverage]
-        protected virtual void Dispose(bool isDisposing)
-        {
-            if (isDisposing
-                && HttpClient != null)
-            {
-                HttpClient.Dispose();
-                HttpClient = null;
-            }
-        }
 
         protected abstract IAsyncEnumerable<StreamResult<T>> Stream(DatasetEntry datasetEntry, CancellationToken cancellationToken);
     }

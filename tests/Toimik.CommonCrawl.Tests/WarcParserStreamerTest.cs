@@ -48,9 +48,9 @@
                     Content = new StreamContent(metadataStream),
                 });
             var streamer = new WarcParserStreamer(
-                messageHandlerMock.Object,
-                 new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
-                 new ParseLog());
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new ParseLog());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -112,9 +112,9 @@
                     Content = new StreamContent(metadataStream),
                 });
             var streamer = new WarcParserStreamer(
-                messageHandlerMock.Object,
-                 new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
-                 new ParseLog());
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new ParseLog());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -164,9 +164,9 @@
                     Content = new StreamContent(metadataStream),
                 });
             var streamer = new WarcParserStreamer(
-                messageHandlerMock.Object,
-                 new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
-                 new ParseLog());
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new ParseLog());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -193,9 +193,9 @@
                     Content = new StreamContent(mainStream),
                 });
             var streamer = new WarcParserStreamer(
-                messageHandlerMock.Object,
-                 new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
-                 new ParseLog());
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new ParseLog());
             const string Hostname = "www.example.com";
 
             await Assert.ThrowsAsync<ArgumentException>(
@@ -223,9 +223,9 @@
                     Content = new StreamContent(metadataStream),
                 });
             var streamer = new WarcParserStreamer(
-                messageHandlerMock.Object,
-                 new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
-                 new ParseLog());
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new ParseLog());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -259,9 +259,9 @@
                     Content = new StreamContent(metadataStream),
                 });
             var streamer = new WarcParserStreamer(
-                messageHandlerMock.Object,
-                 new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
-                 new ParseLog());
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new ParseLog());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -311,9 +311,9 @@
                     Content = new StreamContent(metadataStream),
                 });
             var streamer = new WarcParserStreamer(
-                messageHandlerMock.Object,
-                 new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
-                 new ParseLog());
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new ParseLog());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
