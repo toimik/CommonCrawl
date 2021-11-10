@@ -1,0 +1,20 @@
+WARC/1.1
+WARC-Date: 2000-01-01T12:34:56Z
+WARC-Record-ID: <urn:uuid:d92e8444-34cf-472f-a86e-07b7845ecc05>
+WARC-Type: conversion
+Content-Length: 0
+
+
+WARC/1.1
+WARC-Date: 2000-01-01T12:34:56Z
+WARC-Record-ID: <urn:uuid:d02e8444-34cf-472f-a86e-07b7845ecc05>
+WARC-Type: conversion
+Content-Length: 0
+
+
+WARC/1.1
+WARC-Date: 2000-01-01T12:34:56Z
+WARC-Record-ID: <urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05>
+WARC-Type: conversion
+Content-Length: 0
+

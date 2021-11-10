@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Toimik.CommonCrawl</AssemblyName>
+    <PackageVersion>0.1.0</PackageVersion>
+    <Authors>Nurhafiz</Authors>
+    <Version>0.1.0</Version>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Company>Toimik</Company>
+    <Description>
+      Common Crawl processing tools.
+
+      Visit Project Site for documentation.
+    </Description>
+    <Copyright>nurhafiz@hotmail.sg</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/toimik/CommonCrawl</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/toimik/CommonCrawl.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>common-crawl commoncrawl warc-files warc wat-files wat wet-files wet</PackageTags>
+    <Product>CommonCrawl</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
+    <PackageReference Include="Toimik.WarcProtocol" Version="0.2.0" />
+  </ItemGroup>
+
+</Project>
