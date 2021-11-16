@@ -30,7 +30,10 @@
             using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
             using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
             _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     Content = new StreamContent(mainStream),
@@ -98,7 +101,10 @@
             using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
             using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
             _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     Content = new StreamContent(mainStream),
@@ -154,7 +160,10 @@
             using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
             using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
             _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     Content = new StreamContent(mainStream),
@@ -187,7 +196,10 @@
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
             _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     Content = new StreamContent(mainStream),
@@ -213,7 +225,10 @@
             using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
             using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
             _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     Content = new StreamContent(mainStream),
@@ -245,7 +260,10 @@
             using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
             using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
             _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     Content = new StreamContent(mainStream),
@@ -297,7 +315,10 @@
             using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
             using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
             _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
                     Content = new StreamContent(mainStream),
