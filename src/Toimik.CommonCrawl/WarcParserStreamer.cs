@@ -30,7 +30,7 @@ namespace Toimik.CommonCrawl
     public class WarcParserStreamer : Streamer<Record>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WarcParserStreamer"/>.
+        /// Initializes a new instance of the <see cref="WarcParserStreamer"/> class.
         /// </summary>
         /// <param name="httpClient">
         /// Reference for <see cref="Streamer{T}.HttpClient"/>.
