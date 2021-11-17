@@ -28,6 +28,9 @@ namespace Toimik.CommonCrawl
     /// <summary>
     /// Represents a class that streams the Common Crawl - www.commoncrawl.org - crawl archive.
     /// </summary>
+    /// <typeparam name="T">
+    /// The generic type.
+    /// </typeparam>
     /// <remarks>
     /// Common Crawl provides free monthly data dump of their web crawl. Each file is large and the
     /// cumulative size adds up to petabytes. As such, it is more practical and time-saving to
@@ -36,7 +39,8 @@ namespace Toimik.CommonCrawl
     public abstract class Streamer<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Streamer"/> class that streams over HTTPS.
+        /// Initializes a new instance of the <see cref="Streamer{T}"/> class that streams over
+        /// HTTPS.
         /// </summary>
         /// <param name="httpClient">
         /// The <see cref="System.Net.Http.HttpClient"/> used to make HTTP requests.
@@ -52,11 +56,11 @@ namespace Toimik.CommonCrawl
         /// Streams the records found in every dataset listed in the specified HTTPS location.
         /// </summary>
         /// <param name="hostname">
-        /// The hostname where datasets are located. e.g. <c>commoncrawl.s3.amazonaws.com</c>
+        /// The hostname where datasets are located. e.g. <c>commoncrawl.s3.amazonaws.com</c>.
         /// </param>
         /// <param name="datasetListPath">
         /// The case-sensitive path where the dataset list is located. e.g.
-        /// <c>/crawl-data/CC-MAIN-YYYY-WW/[warc|wat|wet].paths.gz</c>
+        /// <c>/crawl-data/CC-MAIN-YYYY-WW/[warc|wat|wet].paths.gz</c>.
         /// </param>
         /// <param name="datasetStartIndex">
         /// The zero-based index of the dataset entry to start processing from. If this is
