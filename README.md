@@ -29,6 +29,9 @@ PM> Install-Package Toimik.CommonCrawl
 
 ### Usage
 
+The code below is for streaming from remote datasets.
+To process local datasets, use [Toimik.WarcProtocol](https://github.com/toimik/WarcProtocol).
+
 ```c# 
 using System.Diagnostics;
 using System.Net.Http;
