@@ -63,14 +63,14 @@ namespace Toimik.CommonCrawl
         /// <c>/crawl-data/CC-MAIN-YYYY-WW/[warc|wat|wet].paths.gz</c>.
         /// </param>
         /// <param name="datasetStartIndex">
-        /// The zero-based index of the dataset entry to start processing from. If this is
-        /// <c>null</c>, processing starts from the first entry. This is useful to continue from a
-        /// previous stream. If this is negative, it defaults to <c>0</c>.
+        /// The zero-based index of the dataset entry to start processing from. This is useful to
+        /// continue from a previous stream. If this is negative, it defaults to <c>0</c>. The
+        /// default is <c>0</c>.
         /// </param>
         /// <param name="recordStartIndex">
-        /// The zero-based index of the record entry to start processing from. If this is
-        /// <c>null</c>, processing starts from the first entry. This is useful to continue from a
-        /// previous stream. If this is negative, it defaults to <c>0</c>.
+        /// The zero-based index of the record entry to start processing from. This is useful to
+        /// continue from a previous stream. If this is negative, it defaults to <c>0</c>. The
+        /// default is <c>0</c>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional token to monitor for cancellation request.
@@ -89,8 +89,8 @@ namespace Toimik.CommonCrawl
         public async IAsyncEnumerable<StreamResult<T>> Stream(
             string hostname,
             string datasetListPath,
-            int? datasetStartIndex = null,
-            int? recordStartIndex = null,
+            int datasetStartIndex = 0,
+            int recordStartIndex = 0,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             var datasetListUrl = $"https://{hostname.ToLower()}{datasetListPath}";
@@ -104,19 +104,19 @@ namespace Toimik.CommonCrawl
             // Skip, if any, datasets that were streamed
             int index;
             string dataUrl;
-            if (datasetStartIndex == null)
+            if (datasetStartIndex == 0)
             {
                 index = 0;
                 dataUrl = await reader.ReadLineAsync();
             }
             else
             {
-                if (datasetStartIndex.Value < 0)
+                if (datasetStartIndex < 0)
                 {
                     datasetStartIndex = 0;
                 }
 
-                for (index = 0; index < datasetStartIndex.Value; index++)
+                for (index = 0; index < datasetStartIndex; index++)
                 {
                     await reader.ReadLineAsync();
                 }
@@ -134,15 +134,12 @@ namespace Toimik.CommonCrawl
             var streamResults = Stream(new DatasetEntry(index, dataUrl), cancellationToken);
 
             index++;
-            if (recordStartIndex != null)
+            if (recordStartIndex < 0)
             {
-                if (recordStartIndex.Value < 0)
-                {
-                    recordStartIndex = 0;
-                }
-
-                streamResults = streamResults.Skip(recordStartIndex.Value);
+                recordStartIndex = 0;
             }
+
+            streamResults = streamResults.Skip(recordStartIndex);
 
             await foreach (StreamResult<T> streamResult in streamResults)
             {

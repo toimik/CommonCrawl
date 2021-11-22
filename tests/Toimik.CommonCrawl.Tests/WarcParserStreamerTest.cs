@@ -19,10 +19,9 @@
     public class WarcParserStreamerTest
     {
         [Theory]
-        [InlineData(null, null)]
         [InlineData(0, 0)]
         [InlineData(-1, -1)]
-        public async Task StreamFromFirstRecordOfFirstDataset(int? datasetStartIndex, int? recordStartIndex)
+        public async Task StreamFromFirstRecordOfFirstDataset(int datasetStartIndex, int recordStartIndex)
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
