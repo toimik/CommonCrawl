@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Toimik.CommonCrawl</AssemblyName>
-    <PackageVersion>0.2.0</PackageVersion>
+    <PackageVersion>0.2.1</PackageVersion>
     <Authors>Nurhafiz</Authors>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Company>Toimik</Company>
     <Description>
@@ -19,7 +19,7 @@
     <RepositoryUrl>https://github.com/toimik/CommonCrawl.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>common-crawl commoncrawl warc-files warc wat-files wat wet-files wet</PackageTags>
-    <Product>CommonCrawl</Product>
+    <Product>Toimik.CommonCrawl</Product>
   </PropertyGroup>
 
   <ItemGroup>
