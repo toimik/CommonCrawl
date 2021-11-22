@@ -82,7 +82,8 @@ namespace Toimik.CommonCrawl
             var index = 0;
             await foreach (Record record in records)
             {
-                yield return new StreamResult<Record>(datasetEntry, new RecordEntry<Record>(index++, record));
+                yield return new StreamResult<Record>(datasetEntry, new RecordEntry<Record>(index, record));
+                index++;
             }
         }
     }
