@@ -18,16 +18,18 @@
     // - metadata.warc
     public class WarcParserStreamerTest
     {
+        private static readonly string DataDirectory = $"Data{Path.DirectorySeparatorChar}WarcParserStreamer{Path.DirectorySeparatorChar}";
+
         [Theory]
         [InlineData(0, 0)]
         [InlineData(-1, -1)]
         public async Task StreamFromFirstRecordOfFirstDataset(int datasetStartIndex, int recordStartIndex)
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
-            using var warcinfoStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}warcinfo.warc");
-            using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
-            using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
+            using var warcinfoStream = File.OpenRead($"{DataDirectory}warcinfo.warc");
+            using var conversionStream = File.OpenRead($"{DataDirectory}conversion.warc");
+            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
             _ = messageHandlerMock.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
@@ -96,9 +98,9 @@
         public async Task StreamFromFirstRecordOfSecondDataset()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
-            using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
-            using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
+            using var conversionStream = File.OpenRead($"{DataDirectory}conversion.warc");
+            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
             _ = messageHandlerMock.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
@@ -156,8 +158,8 @@
         public async Task StreamFromFirstRecordOfThirdDataset()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
-            using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
+            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
             _ = messageHandlerMock.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
@@ -193,7 +195,7 @@
         public async Task StreamFromNonExistentDataset()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
             _ = messageHandlerMock.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
@@ -221,8 +223,8 @@
         public async Task StreamFromNonExistentIndexOfThirdDataset()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
-            using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
+            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
             _ = messageHandlerMock.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
@@ -255,9 +257,9 @@
         public async Task StreamFromSecondRecordOfSecondDataset()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
-            using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
-            using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
+            using var conversionStream = File.OpenRead($"{DataDirectory}conversion.warc");
+            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
             _ = messageHandlerMock.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",
@@ -310,9 +312,9 @@
         public async Task StreamFromThirdRecordOfSecondDataset()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}index.txt.gz");
-            using var conversionStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}conversion.warc");
-            using var metadataStream = File.OpenRead($"Data{Path.DirectorySeparatorChar}metadata.warc");
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
+            using var conversionStream = File.OpenRead($"{DataDirectory}conversion.warc");
+            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
             _ = messageHandlerMock.Protected()
                 .SetupSequence<Task<HttpResponseMessage>>(
                     "SendAsync",

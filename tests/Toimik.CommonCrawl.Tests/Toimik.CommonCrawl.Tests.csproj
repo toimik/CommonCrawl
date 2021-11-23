@@ -34,16 +34,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\index.txt.gz">
+    <None Update="Data\WarcParserStreamer\index.txt.gz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\conversion.warc">
+    <None Update="Data\WarcParserStreamer\conversion.warc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\metadata.warc">
+    <None Update="Data\WarcParserStreamer\metadata.warc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\warcinfo.warc">
+    <None Update="Data\WarcParserStreamer\warcinfo.warc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
