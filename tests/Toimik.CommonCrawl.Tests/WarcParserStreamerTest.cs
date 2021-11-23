@@ -12,10 +12,12 @@
     using Toimik.WarcProtocol;
     using Xunit;
 
-    // NOTE: index.txt.gz contains these entries (without the dashes):
-    // - warcinfo.warc
-    // - conversion.warc
-    // - metadata.warc
+    /* NOTE: index.txt.gz contains these entries (without the dashes):
+     *  warcinfo.warc
+     *  conversion.warc
+     *  metadata.warc
+     */
+
     public class WarcParserStreamerTest
     {
         private static readonly string DataDirectory = $"Data{Path.DirectorySeparatorChar}WarcParserStreamer{Path.DirectorySeparatorChar}";
