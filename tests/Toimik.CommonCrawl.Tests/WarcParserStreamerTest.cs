@@ -51,7 +51,7 @@
                 });
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
-                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new WarcParser(),
                 new ParseLog());
             const string Hostname = "www.example.com";
 
@@ -118,7 +118,7 @@
                 });
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
-                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new WarcParser(),
                 new ParseLog());
             const string Hostname = "www.example.com";
 
@@ -173,7 +173,7 @@
                 });
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
-                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new WarcParser(),
                 new ParseLog());
             const string Hostname = "www.example.com";
 
@@ -205,7 +205,7 @@
                 });
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
-                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new WarcParser(),
                 new ParseLog());
             const string Hostname = "www.example.com";
 
@@ -238,7 +238,7 @@
                 });
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
-                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new WarcParser(),
                 new ParseLog());
             const string Hostname = "www.example.com";
 
@@ -277,7 +277,7 @@
                 });
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
-                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new WarcParser(),
                 new ParseLog());
             const string Hostname = "www.example.com";
 
@@ -332,7 +332,7 @@
                 });
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
-                new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+                new WarcParser(),
                 new ParseLog());
             const string Hostname = "www.example.com";
 
