@@ -57,7 +57,7 @@
 
             var streamResults = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/path",
+                datasetListPath: "/foobar",
                 datasetStartIndex: datasetStartIndex,
                 recordStartIndex: recordStartIndex).ToListAsync();
 
@@ -124,7 +124,7 @@
 
             var streamResults = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/path",
+                datasetListPath: "/foobar",
                 datasetStartIndex: 1).ToListAsync();
 
             var streamResult = streamResults[0];
@@ -179,7 +179,7 @@
 
             var streamResults = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/path",
+                datasetListPath: "/foobar",
                 datasetStartIndex: 2).ToListAsync();
 
             var streamResult = streamResults[0];
@@ -213,7 +213,7 @@
                 async () =>
                 await streamer.Stream(
                     Hostname,
-                    datasetListPath: "/path",
+                    datasetListPath: "/foobar",
                     datasetStartIndex: 3).ToListAsync());
         }
 
@@ -244,7 +244,7 @@
 
             var streamResults = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/path",
+                datasetListPath: "/foobar",
                 datasetStartIndex: 2,
                 recordStartIndex: 1).ToListAsync();
 
@@ -283,7 +283,7 @@
 
             var streamResults = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/path",
+                datasetListPath: "/foobar",
                 datasetStartIndex: 1,
                 recordStartIndex: 1).ToListAsync();
 
@@ -338,7 +338,7 @@
 
             var streamResults = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/path",
+                datasetListPath: "/foobar",
                 datasetStartIndex: 1,
                 recordStartIndex: 2).ToListAsync();
 
@@ -370,3 +370,5 @@
         }
     }
 }
+
+// todo parse log adapter
