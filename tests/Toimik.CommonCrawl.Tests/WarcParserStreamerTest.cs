@@ -12,7 +12,7 @@
     using Toimik.WarcProtocol;
     using Xunit;
 
-    /* NOTE: index.txt.gz contains these entries (without the dashes):
+    /* NOTE: index.txt.gz contains these entries:
      *  warcinfo.warc
      *  conversion.warc
      *  metadata.warc
