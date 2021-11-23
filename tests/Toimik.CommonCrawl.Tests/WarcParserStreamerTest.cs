@@ -211,12 +211,11 @@
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
                 new ParseLog());
-            const string Hostname = "www.example.com";
 
             await Assert.ThrowsAsync<ArgumentException>(
                 async () =>
                 await streamer.Stream(
-                    Hostname,
+                    hostname: "www.example.com",
                     datasetListPath: "/foobar",
                     datasetStartIndex: 3).ToListAsync());
         }
@@ -244,10 +243,8 @@
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
                 new ParseLog());
-            const string Hostname = "www.example.com";
-
             var streamResults = await streamer.Stream(
-                Hostname,
+                hostname: "www.example.com",
                 datasetListPath: "/foobar",
                 datasetStartIndex: 2,
                 recordStartIndex: 1).ToListAsync();
