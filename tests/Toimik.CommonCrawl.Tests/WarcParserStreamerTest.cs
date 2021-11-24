@@ -1,7 +1,6 @@
 ﻿namespace Toimik.CommonCrawl.Tests
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net.Http;
@@ -56,7 +55,7 @@
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
-                new ParseLog());
+                new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -123,7 +122,7 @@
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
-                new ParseLog());
+                new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -178,7 +177,7 @@
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
-                new ParseLog());
+                new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -210,7 +209,7 @@
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
-                new ParseLog());
+                new ParseLogAdapter());
 
             await Assert.ThrowsAsync<ArgumentException>(
                 async () =>
@@ -242,7 +241,7 @@
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
-                new ParseLog());
+                new ParseLogAdapter());
             var streamResults = await streamer.Stream(
                 hostname: "www.example.com",
                 datasetListPath: "/foobar",
@@ -279,7 +278,7 @@
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
-                new ParseLog());
+                new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -334,7 +333,7 @@
             var streamer = new WarcParserStreamer(
                 new HttpClient(messageHandlerMock.Object),
                 new WarcParser(),
-                new ParseLog());
+                new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
             var streamResults = await streamer.Stream(
@@ -355,21 +354,5 @@
             Assert.Equal(2, streamResult.DatasetEntry.Index);
             Assert.Equal(0, streamResult.RecordEntry.Index);
         }
-
-        private class ParseLog : IParseLog
-        {
-            public void ChunkSkipped(string chunk)
-            {
-                // Do nothing
-            }
-
-            [ExcludeFromCodeCoverage]
-            public void ErrorEncountered(string error)
-            {
-                // Do nothing
-            }
-        }
     }
 }
-
-// todo parse log adapter
