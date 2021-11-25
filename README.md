@@ -65,29 +65,29 @@ class Program
             var record = streamResult.RecordEntry.Value;
 
             // The applicable types depend on the selected dataset list path
-            switch (record.Type.ToLower())
+            switch (record.Type)
             {
-                case "conversion":
+                case ConversionRecord.TypeName:
 
                     // ...
                     break;
 
-                case "metadata":
+                case MetadataRecord.TypeName:
 
                     // ...
                     break;
 
-                case "request":
+                case RequestRecord.TypeName:
 
                     // ...
                     break;
 
-                case "response":
+                case ResponseRecord.TypeName:
 
                     // ...
                     break;
 
-                case "warcinfo":
+                case WarcinfoRecord.TypeName:
 
                     // ...
                     break;
