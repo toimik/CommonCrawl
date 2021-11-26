@@ -24,7 +24,7 @@
         [Theory]
         [InlineData(0, 0)]
         [InlineData(-1, -1)]
-        public async Task StreamFromFirstRecordOfFirstUrl(int urlSegmentOffset, int recordSegmentOffset)
+        public async Task FromFirstRecordOfFirstUrl(int urlSegmentOffset, int recordSegmentOffset)
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -96,7 +96,7 @@
         }
 
         [Fact]
-        public async Task StreamFromFirstRecordOfSecondUrl()
+        public async Task FromFirstRecordOfSecondUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -156,7 +156,7 @@
         }
 
         [Fact]
-        public async Task StreamFromFirstRecordOfThirdUrl()
+        public async Task FromFirstRecordOfThirdUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -193,7 +193,7 @@
         }
 
         [Fact]
-        public async Task StreamFromNonExistentOffsetOfThirdUrl()
+        public async Task FromNonExistentOffsetOfThirdUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -225,7 +225,7 @@
         }
 
         [Fact]
-        public async Task StreamFromNonExistentUrl()
+        public async Task FromNonExistentUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -252,7 +252,7 @@
         }
 
         [Fact]
-        public async Task StreamFromSecondRecordOfSecondUrl()
+        public async Task FromSecondRecordOfSecondUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -307,7 +307,7 @@
         }
 
         [Fact]
-        public async Task StreamFromThirdRecordOfSecondUrl()
+        public async Task FromThirdRecordOfSecondUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
