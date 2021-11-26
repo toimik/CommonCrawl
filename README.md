@@ -45,24 +45,24 @@ class Program
     {
         var streamer = new WarcParserStreamer(
             new HttpClient(), // Ideally a singleton
-            new WarcParser(compressionStreamFactory: new CompressionStreamFactory()),
+            new WarcParser(),
             new DebugParseLog());
 
         // The example below uses October 2021's dataset. Other datasets are found at
         // https://commoncrawl.org/the-data/get-started.
 
-        var datasetListPath = "/crawl-data/CC-MAIN-2021-43/warc.paths.gz";
+        var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/warc.paths.gz";
 
-        // var datasetListPath = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";
+        // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";
 
-        // var datasetListPath = "/crawl-data/CC-MAIN-2021-43/wet.paths.gz";
+        // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wet.paths.gz";
 
-        var streamResults = streamer.Stream(
+        var results = streamer.Stream(
             hostname: "commoncrawl.s3.amazonaws.com",
-            datasetListPath: datasetListPath);
-        await foreach (StreamResult<Record> streamResult in streamResults)
+            urlSegmentList);
+        await foreach (Streamer<Record>.Result result in results)
         {
-            var record = streamResult.RecordEntry.Value;
+            var record = result.RecordSegment.Value;
 
             // The applicable types depend on the selected dataset list path
             switch (record.Type)

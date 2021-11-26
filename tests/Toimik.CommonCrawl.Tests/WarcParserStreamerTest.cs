@@ -24,7 +24,7 @@
         [Theory]
         [InlineData(0, 0)]
         [InlineData(-1, -1)]
-        public async Task StreamFromFirstRecordOfFirstDataset(int datasetStartIndex, int recordStartIndex)
+        public async Task StreamFromFirstRecordOfFirstUrl(int urlSegmentOffset, int recordSegmentOffset)
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -58,45 +58,45 @@
                 new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
-            var streamResults = await streamer.Stream(
+            var results = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/foobar",
-                datasetStartIndex: datasetStartIndex,
-                recordStartIndex: recordStartIndex).ToListAsync();
+                urlSegmentList: "/foobar",
+                urlSegmentOffset: urlSegmentOffset,
+                recordSegmentOffset: recordSegmentOffset).ToListAsync();
 
-            var streamResult = streamResults[0];
-            Assert.Equal($"https://{Hostname}/warcinfo.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:b92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(0, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            var streamResult = results[0];
+            Assert.Equal($"https://{Hostname}/warcinfo.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:b92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(0, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[1];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            streamResult = results[1];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[2];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d02e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(1, streamResult.RecordEntry.Index);
+            streamResult = results[2];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d02e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(1, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[3];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(2, streamResult.RecordEntry.Index);
+            streamResult = results[3];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(2, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[4];
-            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(2, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            streamResult = results[4];
+            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(2, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
         }
 
         [Fact]
-        public async Task StreamFromFirstRecordOfSecondDataset()
+        public async Task StreamFromFirstRecordOfSecondUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -125,38 +125,38 @@
                 new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
-            var streamResults = await streamer.Stream(
+            var results = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/foobar",
-                datasetStartIndex: 1).ToListAsync();
+                urlSegmentList: "/foobar",
+                urlSegmentOffset: 1).ToListAsync();
 
-            var streamResult = streamResults[0];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            var streamResult = results[0];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[1];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d02e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(1, streamResult.RecordEntry.Index);
+            streamResult = results[1];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d02e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(1, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[2];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(2, streamResult.RecordEntry.Index);
+            streamResult = results[2];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(2, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[3];
-            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(2, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            streamResult = results[3];
+            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(2, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
         }
 
         [Fact]
-        public async Task StreamFromFirstRecordOfThirdDataset()
+        public async Task StreamFromFirstRecordOfThirdUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -180,20 +180,52 @@
                 new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
-            var streamResults = await streamer.Stream(
+            var results = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/foobar",
-                datasetStartIndex: 2).ToListAsync();
+                urlSegmentList: "/foobar",
+                urlSegmentOffset: 2).ToListAsync();
 
-            var streamResult = streamResults[0];
-            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(2, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            var streamResult = results[0];
+            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(2, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
         }
 
         [Fact]
-        public async Task StreamFromNonExistentDataset()
+        public async Task StreamFromNonExistentOffsetOfThirdUrl()
+        {
+            var messageHandlerMock = new Mock<HttpMessageHandler>();
+            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
+            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
+            _ = messageHandlerMock.Protected()
+                .SetupSequence<Task<HttpResponseMessage>>(
+                    "SendAsync",
+                    ItExpr.IsAny<HttpRequestMessage>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    Content = new StreamContent(mainStream),
+                })
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    Content = new StreamContent(metadataStream),
+                });
+            var streamer = new WarcParserStreamer(
+                new HttpClient(messageHandlerMock.Object),
+                new WarcParser(),
+                new ParseLogAdapter());
+            var results = await streamer.Stream(
+                hostname: "www.example.com",
+                urlSegmentList: "/foobar",
+                urlSegmentOffset: 2,
+                recordSegmentOffset: 1).ToListAsync();
+
+            Assert.Empty(results);
+        }
+
+        [Fact]
+        public async Task StreamFromNonExistentUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -215,44 +247,12 @@
                 async () =>
                 await streamer.Stream(
                     hostname: "www.example.com",
-                    datasetListPath: "/foobar",
-                    datasetStartIndex: 3).ToListAsync());
+                    urlSegmentList: "/foobar",
+                    urlSegmentOffset: 3).ToListAsync());
         }
 
         [Fact]
-        public async Task StreamFromNonExistentIndexOfThirdDataset()
-        {
-            var messageHandlerMock = new Mock<HttpMessageHandler>();
-            using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
-            using var metadataStream = File.OpenRead($"{DataDirectory}metadata.warc");
-            _ = messageHandlerMock.Protected()
-                .SetupSequence<Task<HttpResponseMessage>>(
-                    "SendAsync",
-                    ItExpr.IsAny<HttpRequestMessage>(),
-                    ItExpr.IsAny<CancellationToken>())
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    Content = new StreamContent(mainStream),
-                })
-                .ReturnsAsync(new HttpResponseMessage
-                {
-                    Content = new StreamContent(metadataStream),
-                });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
-            var streamResults = await streamer.Stream(
-                hostname: "www.example.com",
-                datasetListPath: "/foobar",
-                datasetStartIndex: 2,
-                recordStartIndex: 1).ToListAsync();
-
-            Assert.Empty(streamResults);
-        }
-
-        [Fact]
-        public async Task StreamFromSecondRecordOfSecondDataset()
+        public async Task StreamFromSecondRecordOfSecondUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -281,33 +281,33 @@
                 new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
-            var streamResults = await streamer.Stream(
+            var results = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/foobar",
-                datasetStartIndex: 1,
-                recordStartIndex: 1).ToListAsync();
+                urlSegmentList: "/foobar",
+                urlSegmentOffset: 1,
+                recordSegmentOffset: 1).ToListAsync();
 
-            var streamResult = streamResults[0];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d02e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(1, streamResult.RecordEntry.Index);
+            var streamResult = results[0];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d02e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(1, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[1];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(2, streamResult.RecordEntry.Index);
+            streamResult = results[1];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(2, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[2];
-            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(2, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            streamResult = results[2];
+            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(2, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
         }
 
         [Fact]
-        public async Task StreamFromThirdRecordOfSecondDataset()
+        public async Task StreamFromThirdRecordOfSecondUrl()
         {
             var messageHandlerMock = new Mock<HttpMessageHandler>();
             using var mainStream = File.OpenRead($"{DataDirectory}index.txt.gz");
@@ -336,23 +336,23 @@
                 new ParseLogAdapter());
             const string Hostname = "www.example.com";
 
-            var streamResults = await streamer.Stream(
+            var results = await streamer.Stream(
                 Hostname,
-                datasetListPath: "/foobar",
-                datasetStartIndex: 1,
-                recordStartIndex: 2).ToListAsync();
+                urlSegmentList: "/foobar",
+                urlSegmentOffset: 1,
+                recordSegmentOffset: 2).ToListAsync();
 
-            var streamResult = streamResults[0];
-            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(1, streamResult.DatasetEntry.Index);
-            Assert.Equal(2, streamResult.RecordEntry.Index);
+            var streamResult = results[0];
+            Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:d12e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(1, streamResult.UrlSegment.Index);
+            Assert.Equal(2, streamResult.RecordSegment.Index);
 
-            streamResult = streamResults[1];
-            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.DatasetEntry.Url.ToString());
-            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordEntry.Value.Id);
-            Assert.Equal(2, streamResult.DatasetEntry.Index);
-            Assert.Equal(0, streamResult.RecordEntry.Index);
+            streamResult = results[1];
+            Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.UrlSegment.Value);
+            Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
+            Assert.Equal(2, streamResult.UrlSegment.Index);
+            Assert.Equal(0, streamResult.RecordSegment.Index);
         }
     }
 }

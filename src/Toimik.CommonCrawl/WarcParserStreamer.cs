@@ -69,9 +69,9 @@ namespace Toimik.CommonCrawl
             return Parser.CompressionStreamFactory.CreateDecompressStream(stream);
         }
 
-        protected override async IAsyncEnumerable<StreamResult<Record>> Stream(DatasetEntry datasetEntry, [EnumeratorCancellation] CancellationToken cancellationToken)
+        protected override async IAsyncEnumerable<Result> Stream(Segment<string> urlSegment, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
-            var url = datasetEntry.Url;
+            var url = urlSegment.Value;
             using var stream = await Connect(url, cancellationToken);
             var records = Parser.Parse(
                 stream,
@@ -79,11 +79,11 @@ namespace Toimik.CommonCrawl
                 ParseLog,
                 byteOffset: 0,
                 cancellationToken);
-            var index = 0;
+            var offset = 0;
             await foreach (Record record in records)
             {
-                yield return new StreamResult<Record>(datasetEntry, new RecordEntry<Record>(index, record));
-                index++;
+                yield return new Result(urlSegment, new Segment<Record>(offset, record));
+                offset++;
             }
         }
     }

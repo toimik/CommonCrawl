@@ -16,16 +16,19 @@
 
 namespace Toimik.CommonCrawl
 {
-    public struct StreamResult<T>
+    public struct Segment<T>
     {
-        public StreamResult(DatasetEntry datasetEntry, RecordEntry<T> recordEntry)
+        public Segment(int index, T value)
         {
-            DatasetEntry = datasetEntry;
-            RecordEntry = recordEntry;
+            Index = index;
+            Value = value;
         }
 
-        public DatasetEntry DatasetEntry { get; }
+        /// <summary>
+        /// Gets, for this instance, the zero-based index of the <see cref="Value"/> in the segment.
+        /// </summary>
+        public int Index { get; }
 
-        public RecordEntry<T> RecordEntry { get; }
+        public T Value { get; }
     }
 }
