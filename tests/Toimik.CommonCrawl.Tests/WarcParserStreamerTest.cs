@@ -52,10 +52,7 @@
                 {
                     Content = new StreamContent(metadataStream),
                 });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
+            var streamer = CreateStreamer(messageHandlerMock.Object);
             const string Hostname = "www.example.com";
 
             var results = await streamer.Stream(
@@ -119,10 +116,7 @@
                 {
                     Content = new StreamContent(metadataStream),
                 });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
+            var streamer = CreateStreamer(messageHandlerMock.Object);
             const string Hostname = "www.example.com";
 
             var results = await streamer.Stream(
@@ -174,10 +168,7 @@
                 {
                     Content = new StreamContent(metadataStream),
                 });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
+            var streamer = CreateStreamer(messageHandlerMock.Object);
             const string Hostname = "www.example.com";
 
             var results = await streamer.Stream(
@@ -211,10 +202,8 @@
                 {
                     Content = new StreamContent(metadataStream),
                 });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
+            var streamer = CreateStreamer(messageHandlerMock.Object);
+
             var results = await streamer.Stream(
                 hostname: "www.example.com",
                 urlSegmentList: "/foobar",
@@ -238,10 +227,7 @@
                 {
                     Content = new StreamContent(mainStream),
                 });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
+            var streamer = CreateStreamer(messageHandlerMock.Object);
 
             await Assert.ThrowsAsync<ArgumentException>(
                 async () =>
@@ -275,10 +261,7 @@
                 {
                     Content = new StreamContent(metadataStream),
                 });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
+            var streamer = CreateStreamer(messageHandlerMock.Object);
             const string Hostname = "www.example.com";
 
             var results = await streamer.Stream(
@@ -330,10 +313,7 @@
                 {
                     Content = new StreamContent(metadataStream),
                 });
-            var streamer = new WarcParserStreamer(
-                new HttpClient(messageHandlerMock.Object),
-                new WarcParser(),
-                new ParseLogAdapter());
+            var streamer = CreateStreamer(messageHandlerMock.Object);
             const string Hostname = "www.example.com";
 
             var results = await streamer.Stream(
@@ -353,6 +333,14 @@
             Assert.Equal(new Uri("urn:uuid:c92e8444-34cf-472f-a86e-07b7845ecc05"), streamResult.RecordSegment.Value.Id);
             Assert.Equal(2, streamResult.UrlSegment.Index);
             Assert.Equal(0, streamResult.RecordSegment.Index);
+        }
+
+        private static WarcParserStreamer CreateStreamer(HttpMessageHandler messageHandler)
+        {
+            return new WarcParserStreamer(
+                new HttpClient(messageHandler),
+                new WarcParser(),
+                new ParseLogAdapter());
         }
     }
 }
