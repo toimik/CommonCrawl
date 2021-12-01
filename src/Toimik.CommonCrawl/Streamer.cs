@@ -43,7 +43,7 @@ namespace Toimik.CommonCrawl
         /// HTTPS.
         /// </summary>
         /// <param name="httpClient">
-        /// The <see cref="System.Net.Http.HttpClient"/> used to make HTTP requests.
+        /// The <see cref="HttpClient"/> used to make HTTP requests.
         /// </param>
         protected Streamer(HttpClient httpClient)
         {
