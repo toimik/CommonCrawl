@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Toimik.WarcProtocol;
 
-    public class Program
+    public class StreamerProgram
     {
         public static async Task Main()
         {
