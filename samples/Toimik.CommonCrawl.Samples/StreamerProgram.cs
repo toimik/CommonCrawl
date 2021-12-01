@@ -21,9 +21,7 @@
             // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";
 
             // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wet.paths.gz";
-            var results = streamer.Stream(
-                hostname: "commoncrawl.s3.amazonaws.com",
-                urlSegmentList);
+            var results = streamer.Stream(hostname: "commoncrawl.s3.amazonaws.com", urlSegmentList);
             await foreach (Streamer<Record>.Result result in results)
             {
                 var record = result.RecordSegment.Value;
