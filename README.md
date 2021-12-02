@@ -123,12 +123,8 @@ public class WatUrlExtractorProgram
     {
         const string Hostname = "commoncrawl.s3.amazonaws.com";
 
-        // Common Crawl's WAT files start with a warcinfo record. It is observed that the second
-        // one is a metadata record of that warcinfo. The problem is that the WARC-Target-URI
-        // value of that record uses a relative URL, which is the name of the URL segment.
-        //
-        // As the WarcProtocol.WarcParser expects an absolute URL, this factory takes care of it
-        // by prefixing that URL with the hostname.
+        // As the WarcProtocol.WarcParser expects an absolute URL, this factory takes care of
+        // all relative URLs by prefixing them with the hostname
         var recordFactory = new WatRecordFactory(Hostname);
 
         var streamer = new WarcParserStreamer(
