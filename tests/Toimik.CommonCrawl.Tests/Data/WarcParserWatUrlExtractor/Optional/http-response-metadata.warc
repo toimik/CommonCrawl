@@ -1,0 +1,19 @@
+WARC/1.0
+WARC-Type: metadata
+WARC-Record-ID: <urn:uuid:a65b9f84-559f-4c03-888e-af9df2f10b28>
+WARC-Date: 2021-10-29T01:26:02Z
+Content-Length: 151
+Content-Type: application/json
+WARC-Refers-To: <urn:uuid:7f46ffd5-a93c-4cb7-91e7-548b95991072>
+WARC-Target-URI: http://www.example.com/
+
+{
+  "Envelope": {
+    "WARC-Header-Metadata": {
+      "WARC-Target-URI": "http://www.example.com/"
+    },
+    "Payload-Metadata": {
+    }
+  }
+}
+

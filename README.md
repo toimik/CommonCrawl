@@ -9,6 +9,7 @@
 ## Features
 
 - Parses WARC / WAT / WET datasets via streaming (read: no local download required)
+- Extracts URLs from WAT datasets via streaming
 - More to come ...
 
 ## Quick Start
@@ -29,6 +30,8 @@ PM> Install-Package Toimik.CommonCrawl
 
 ### Usage
 
+#### Streaming WARC / WAT / WET datasets
+
 The code below is for streaming from remote datasets.
 To process local datasets, use [Toimik.WarcProtocol](https://github.com/toimik/WarcProtocol).
 
@@ -36,12 +39,11 @@ To process local datasets, use [Toimik.WarcProtocol](https://github.com/toimik/W
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Toimik.CommonCrawl;
 using Toimik.WarcProtocol;
 
-class Program
+public class StreamerProgram
 {
-    static async Task Main(string[] args)
+    public static async Task Main()
     {
         var streamer = new WarcParserStreamer(
             new HttpClient(), // Ideally a singleton
@@ -50,16 +52,12 @@ class Program
 
         // The example below uses October 2021's dataset. Other datasets are found at
         // https://commoncrawl.org/the-data/get-started.
-
         var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/warc.paths.gz";
 
         // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";
 
         // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wet.paths.gz";
-
-        var results = streamer.Stream(
-            hostname: "commoncrawl.s3.amazonaws.com",
-            urlSegmentList);
+        var results = streamer.Stream(hostname: "commoncrawl.s3.amazonaws.com", urlSegmentList);
         await foreach (Streamer<Record>.Result result in results)
         {
             var record = result.RecordSegment.Value;
@@ -95,7 +93,62 @@ class Program
         }
     }
 
-    class DebugParseLog : IParseLog
+    private class DebugParseLog : IParseLog
+    {
+        public void ChunkSkipped(string chunk)
+        {
+            Debug.WriteLine(chunk);
+        }
+
+        public void ErrorEncountered(string error)
+        {
+            Debug.WriteLine(error);
+        }
+    }
+}
+```
+&nbsp;
+#### Extracting URLs from streamed WAT datasets
+
+```c# 
+using System;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Toimik.WarcProtocol;
+
+public class WatUrlExtractorProgram
+{
+    public static async Task Main()
+    {
+        const string Hostname = "commoncrawl.s3.amazonaws.com";
+
+        // Common Crawl's WAT files start with a warcinfo record. It is observed that the second
+        // one is a metadata record of that warcinfo. The problem is that the WARC-Target-URI
+        // value of that record uses a relative URL, which is the name of the URL segment.
+        //
+        // As the WarcProtocol.WarcParser expects an absolute URL, this factory takes care of it
+        // by prefixing that URL with the hostname.
+        var recordFactory = new WatRecordFactory(Hostname);
+
+        var streamer = new WarcParserStreamer(
+            new HttpClient(), // Ideally, a singleton
+            new WarcParser(recordFactory),
+            new DebugParseLog());
+        var extractor = new WarcParserWatUrlExtractor(streamer);
+
+        // The example below uses October 2021's dataset. Other datasets are found at
+        // https://commoncrawl.org/the-data/get-started.
+        var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";
+
+        var results = extractor.Extract(Hostname, urlSegmentList);
+        await foreach (WatUrlExtractor<Record>.Result result in results)
+        {
+            Console.WriteLine($"{result.Index}: {result.Url}");
+        }
+    }
+
+    private class DebugParseLog : IParseLog
     {
         public void ChunkSkipped(string chunk)
         {

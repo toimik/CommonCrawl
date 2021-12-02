@@ -28,7 +28,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Include="Toimik.WarcProtocol" Version="0.2.1" />
+    <PackageReference Include="System.Text.Json" Version="6.0.0" />
+    <PackageReference Include="Toimik.WarcProtocol" Version="0.2.4" />
   </ItemGroup>
 
 </Project>

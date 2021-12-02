@@ -46,6 +46,45 @@
     <None Update="Data\WarcParserStreamer\warcinfo.warc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Data\WarcParserWatUrlExtractor\index.txt.gz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Invalid\index.txt.gz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Invalid\invalid.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Optional\missing.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Optional\index.txt.gz">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Optional\head.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Optional\warc-target-uri.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Optional\html-metadata.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Optional\http-response-metadata.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\Optional\payload-metadata.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\metadata3.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\metadata2.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\WarcParserWatUrlExtractor\metadata.warc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
