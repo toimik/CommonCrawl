@@ -53,7 +53,7 @@ namespace Toimik.CommonCrawl
         public HttpClient HttpClient { get; }
 
         /// <summary>
-        /// Streams, for this instance, the records found in every datasets hosted at the specified
+        /// Streams, for this instance, the records found in every dataset hosted at the specified
         /// HTTPS location.
         /// </summary>
         /// <param name="hostname">
