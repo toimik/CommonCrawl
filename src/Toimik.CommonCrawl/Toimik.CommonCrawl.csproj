@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Toimik.CommonCrawl</AssemblyName>
-    <PackageVersion>0.2.1</PackageVersion>
+    <PackageVersion>0.3.0</PackageVersion>
     <Authors>Nurhafiz</Authors>
-    <Version>0.2.1</Version>
+    <Version>0.3.0</Version>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Company>Toimik</Company>
     <Description>
