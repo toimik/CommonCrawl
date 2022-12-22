@@ -63,6 +63,11 @@ public class WarcParserWatUrlExtractor : WatUrlExtractor<Record>
         {
             var metadataRecord = (MetadataRecord)record;
             var contentBlock = metadataRecord.ContentBlock;
+            if (contentBlock == null)
+            {
+                yield break;
+            }
+
             JsonDocument document;
             try
             {

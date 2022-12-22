@@ -234,7 +234,7 @@ public class WarcParserStreamerTest
             await streamer.Stream(
                 hostname: "www.example.com",
                 urlSegmentList: "/foobar",
-                urlSegmentOffset: 3).ToListAsync().ConfigureAwait(false));
+                urlSegmentOffset: 3).ToListAsync().ConfigureAwait(false)).ConfigureAwait(false);
     }
 
     [Fact]
