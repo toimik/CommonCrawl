@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021 nurhafiz@hotmail.sg
+ * Copyright 2021-2022 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,77 +14,77 @@
  * limitations under the License.
  */
 
-namespace Toimik.CommonCrawl
+namespace Toimik.CommonCrawl;
+
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using Toimik.WarcProtocol;
+
+/// <summary>
+/// Represents a <see cref="Streamer{T}"/> that uses <see cref="WarcParser"/> from the
+/// <c>Toimik.WarcProtocol</c> nuget package.
+/// </summary>
+public class WarcParserStreamer : Streamer<Record>
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Net.Http;
-    using System.Runtime.CompilerServices;
-    using System.Threading;
-    using Toimik.WarcProtocol;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WarcParserStreamer"/> class.
+    /// </summary>
+    /// <param name="httpClient">
+    /// Reference for <see cref="Streamer{T}.HttpClient"/>.
+    /// </param>
+    /// <param name="parser">
+    /// Reference for <see cref="Parser"/>.
+    /// </param>
+    /// <param name="parseLog">
+    /// Reference for <see cref="ParseLog"/>.
+    /// </param>
+    public WarcParserStreamer(
+        HttpClient httpClient,
+        WarcParser parser,
+        IParseLog parseLog)
+        : base(httpClient)
+    {
+        Parser = parser;
+        ParseLog = parseLog;
+    }
 
     /// <summary>
-    /// Represents a <see cref="Streamer{T}"/> that uses <see cref="WarcParser"/> from the
-    /// <c>Toimik.WarcProtocol</c> nuget package.
+    /// Gets, for this instance, the <see cref="IParseLog"/> used to consume all errors and / or
+    /// skipped chunks when parsing the datasets. If this is <c>null</c>, streaming terminates
+    /// on the first parsing error.
     /// </summary>
-    public class WarcParserStreamer : Streamer<Record>
+    public IParseLog ParseLog { get; }
+
+    /// <summary>
+    /// Gets, for this instance, the <see cref="WarcParser"/> used to parse records from the
+    /// datasets.
+    /// </summary>
+    public WarcParser Parser { get; }
+
+    protected override Stream Decompress(Stream stream)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WarcParserStreamer"/> class.
-        /// </summary>
-        /// <param name="httpClient">
-        /// Reference for <see cref="Streamer{T}.HttpClient"/>.
-        /// </param>
-        /// <param name="parser">
-        /// Reference for <see cref="Parser"/>.
-        /// </param>
-        /// <param name="parseLog">
-        /// Reference for <see cref="ParseLog"/>.
-        /// </param>
-        public WarcParserStreamer(
-            HttpClient httpClient,
-            WarcParser parser,
-            IParseLog parseLog)
-            : base(httpClient)
+        return Parser.CompressionStreamFactory.CreateDecompressStream(stream);
+    }
+
+    protected override async IAsyncEnumerable<Result> Stream(Segment<string> urlSegment, [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var url = urlSegment.Value;
+        using var stream = await Connect(url, cancellationToken).ConfigureAwait(false);
+        var records = Parser.Parse(
+            stream,
+            isCompressed: url.EndsWith(".gz"),
+            ParseLog,
+            byteOffset: 0,
+            cancellationToken);
+        var offset = 0;
+        await foreach (Record record in records.ConfigureAwait(false))
         {
-            Parser = parser;
-            ParseLog = parseLog;
-        }
-
-        /// <summary>
-        /// Gets, for this instance, the <see cref="IParseLog"/> used to consume all errors and / or
-        /// skipped chunks when parsing the datasets. If this is <c>null</c>, streaming terminates
-        /// on the first parsing error.
-        /// </summary>
-        public IParseLog ParseLog { get; }
-
-        /// <summary>
-        /// Gets, for this instance, the <see cref="WarcParser"/> used to parse records from the
-        /// datasets.
-        /// </summary>
-        public WarcParser Parser { get; }
-
-        protected override Stream Decompress(Stream stream)
-        {
-            return Parser.CompressionStreamFactory.CreateDecompressStream(stream);
-        }
-
-        protected override async IAsyncEnumerable<Result> Stream(Segment<string> urlSegment, [EnumeratorCancellation] CancellationToken cancellationToken)
-        {
-            var url = urlSegment.Value;
-            using var stream = await Connect(url, cancellationToken);
-            var records = Parser.Parse(
-                stream,
-                isCompressed: url.EndsWith(".gz"),
-                ParseLog,
-                byteOffset: 0,
-                cancellationToken);
-            var offset = 0;
-            await foreach (Record record in records)
-            {
-                yield return new Result(urlSegment, new Segment<Record>(offset, record));
-                offset++;
-            }
+            yield return new Result(urlSegment, new Segment<Record>(offset, record));
+            offset++;
         }
     }
 }

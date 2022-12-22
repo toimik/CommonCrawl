@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021 nurhafiz@hotmail.sg
+ * Copyright 2021-2022 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-namespace Toimik.CommonCrawl
+namespace Toimik.CommonCrawl;
+
+public struct Segment<T>
 {
-    public struct Segment<T>
+    public Segment(int index, T value)
     {
-        public Segment(int index, T value)
-        {
-            Index = index;
-            Value = value;
-        }
-
-        /// <summary>
-        /// Gets, for this instance, the zero-based index of the <see cref="Value"/> in the segment.
-        /// </summary>
-        public int Index { get; }
-
-        public T Value { get; }
+        Index = index;
+        Value = value;
     }
+
+    /// <summary>
+    /// Gets, for this instance, the zero-based index of the <see cref="Value"/> in the segment.
+    /// </summary>
+    public int Index { get; }
+
+    public T Value { get; }
 }

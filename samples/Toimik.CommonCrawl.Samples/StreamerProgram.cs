@@ -1,73 +1,72 @@
-﻿namespace Toimik.CommonCrawl.Samples
+﻿namespace Toimik.CommonCrawl.Samples;
+
+using System.Diagnostics;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Toimik.WarcProtocol;
+
+public class StreamerProgram
 {
-    using System.Diagnostics;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using Toimik.WarcProtocol;
-
-    public class StreamerProgram
+    public static async Task Main()
     {
-        public static async Task Main()
+        var streamer = new WarcParserStreamer(
+            new HttpClient(), // Ideally a singleton
+            new WarcParser(),
+            new DebugParseLog());
+
+        // The example below uses October 2021's dataset. Other datasets are found at
+        // https://commoncrawl.org/the-data/get-started.
+        var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/warc.paths.gz";
+
+        // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";
+
+        // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wet.paths.gz";
+        var results = streamer.Stream(hostname: "commoncrawl.s3.amazonaws.com", urlSegmentList);
+        await foreach (Streamer<Record>.Result result in results.ConfigureAwait(false))
         {
-            var streamer = new WarcParserStreamer(
-                new HttpClient(), // Ideally a singleton
-                new WarcParser(),
-                new DebugParseLog());
+            var record = result.RecordSegment.Value;
 
-            // The example below uses October 2021's dataset. Other datasets are found at
-            // https://commoncrawl.org/the-data/get-started.
-            var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/warc.paths.gz";
-
-            // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";
-
-            // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wet.paths.gz";
-            var results = streamer.Stream(hostname: "commoncrawl.s3.amazonaws.com", urlSegmentList);
-            await foreach (Streamer<Record>.Result result in results)
+            // The applicable types depend on the selected dataset list path
+            switch (record.Type)
             {
-                var record = result.RecordSegment.Value;
+                case ConversionRecord.TypeName:
 
-                // The applicable types depend on the selected dataset list path
-                switch (record.Type)
-                {
-                    case ConversionRecord.TypeName:
+                    // ...
+                    break;
 
-                        // ...
-                        break;
+                case MetadataRecord.TypeName:
 
-                    case MetadataRecord.TypeName:
+                    // ...
+                    break;
 
-                        // ...
-                        break;
+                case RequestRecord.TypeName:
 
-                    case RequestRecord.TypeName:
+                    // ...
+                    break;
 
-                        // ...
-                        break;
+                case ResponseRecord.TypeName:
 
-                    case ResponseRecord.TypeName:
+                    // ...
+                    break;
 
-                        // ...
-                        break;
+                case WarcinfoRecord.TypeName:
 
-                    case WarcinfoRecord.TypeName:
-
-                        // ...
-                        break;
-                }
+                    // ...
+                    break;
             }
         }
+    }
 
-        private class DebugParseLog : IParseLog
+    private class DebugParseLog : IParseLog
+    {
+        public void ChunkSkipped(string chunk)
         {
-            public void ChunkSkipped(string chunk)
-            {
-                Debug.WriteLine(chunk);
-            }
+            Debug.WriteLine(chunk);
+        }
 
-            public void ErrorEncountered(string error)
-            {
-                Debug.WriteLine(error);
-            }
+        public void ErrorEncountered(string error)
+        {
+            Debug.WriteLine(error);
         }
     }
 }

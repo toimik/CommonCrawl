@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021 nurhafiz@hotmail.sg
+ * Copyright 2021-2022 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,71 +14,70 @@
  * limitations under the License.
  */
 
-namespace Toimik.CommonCrawl
+namespace Toimik.CommonCrawl;
+
+using System;
+using Toimik.WarcProtocol;
+
+public class WatRecordFactory : RecordFactory
 {
-    using System;
-    using Toimik.WarcProtocol;
+    private bool isFirstMetadataRecord = true;
 
-    public class WatRecordFactory : RecordFactory
+    public WatRecordFactory(
+        string hostname,
+        DigestFactory? digestFactory = null,
+        PayloadTypeIdentifier? payloadTypeIdentifier = null)
+        : base(
+              digestFactory,
+              payloadTypeIdentifier)
     {
-        private bool isFirstMetadataRecord = true;
+        Hostname = hostname;
+    }
 
-        public WatRecordFactory(
-            string hostname,
-            DigestFactory digestFactory = null,
-            PayloadTypeIdentifier payloadTypeIdentifier = null)
-            : base(
-                  digestFactory,
-                  payloadTypeIdentifier)
+    public string Hostname { get; }
+
+    public override Record CreateRecord(
+        string version,
+        string recordType,
+        Uri recordId,
+        DateTime date)
+    {
+        Record record;
+        switch (recordType.ToLower())
         {
-            Hostname = hostname;
-        }
-
-        public string Hostname { get; }
-
-        public override Record CreateRecord(
-            string version,
-            string recordType,
-            Uri recordId,
-            DateTime date)
-        {
-            Record record;
-            switch (recordType.ToLower())
-            {
-                case MetadataRecord.TypeName:
-                    if (!isFirstMetadataRecord)
-                    {
-                        record = base.CreateRecord(
-                            version,
-                            recordType,
-                            recordId,
-                            date);
-                    }
-                    else
-                    {
-                        // The first metadata record may be problematic because its WARC-Target-URI
-                        // uses a relative URL. This class takes care of that.
-                        record = new WatMetadataRecord(
-                            version,
-                            recordId,
-                            date,
-                            DigestFactory,
-                            new Uri($"https://{Hostname}"));
-                        isFirstMetadataRecord = false;
-                    }
-
-                    break;
-
-                default:
+            case MetadataRecord.TypeName:
+                if (!isFirstMetadataRecord)
+                {
                     record = base.CreateRecord(
                         version,
                         recordType,
                         recordId,
                         date);
-                    break;
-            }
+                }
+                else
+                {
+                    // The first metadata record may be problematic because its WARC-Target-URI
+                    // uses a relative URL. This class takes care of that.
+                    record = new WatMetadataRecord(
+                        version,
+                        recordId,
+                        date,
+                        DigestFactory,
+                        new Uri($"https://{Hostname}"));
+                    isFirstMetadataRecord = false;
+                }
 
-            return record;
+                break;
+
+            default:
+                record = base.CreateRecord(
+                    version,
+                    recordType,
+                    recordId,
+                    date);
+                break;
         }
+
+        return record;
     }
 }
