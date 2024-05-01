@@ -3,7 +3,7 @@
 
 # Toimik.CommonCrawl
 
-.NET 6 C# [Common Crawl](http://commoncrawl.org) processing tools.
+.NET 8 C# [Common Crawl](http://commoncrawl.org) processing tools.
 
 ## Features
 
