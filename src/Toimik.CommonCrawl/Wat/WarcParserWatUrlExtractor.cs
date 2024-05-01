@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2022 nurhafiz@hotmail.sg
+ * Copyright 2021-2024 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,17 +21,12 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Toimik.WarcProtocol;
 
-public class WarcParserWatUrlExtractor : WatUrlExtractor<Record>
+public class WarcParserWatUrlExtractor(WarcParserStreamer streamer) : WatUrlExtractor<Record>(streamer)
 {
     private static readonly JsonDocumentOptions JsonOptions = new()
     {
         AllowTrailingCommas = true,
     };
-
-    public WarcParserWatUrlExtractor(WarcParserStreamer streamer)
-        : base(streamer)
-    {
-    }
 
     internal static string CreateAbsoluteUrl(Uri baseUrl, string suffix)
     {

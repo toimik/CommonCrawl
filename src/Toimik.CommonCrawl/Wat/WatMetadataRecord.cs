@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2022 nurhafiz@hotmail.sg
+ * Copyright 2021-2024 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,27 +24,20 @@ using Toimik.WarcProtocol;
 /// </summary>
 /// <remarks>
 /// This is needed because the first record of the WAT dataset uses a relative URL for its
-/// <c>WARC-Target-URI</c> value. That is incompatible with what <see cref="WarcParser"/>
-/// expects.
+/// <c>WARC-Target-URI</c> value. That is incompatible with what <see cref="WarcParser"/> expects.
 /// </remarks>
-public class WatMetadataRecord : MetadataRecord
+public class WatMetadataRecord(
+    string version,
+    Uri recordId,
+    DateTime date,
+    DigestFactory digestFactory,
+    Uri baseUrl) : MetadataRecord(
+        version,
+        recordId,
+        date,
+        digestFactory: digestFactory)
 {
-    public WatMetadataRecord(
-        string version,
-        Uri recordId,
-        DateTime date,
-        DigestFactory digestFactory,
-        Uri baseUrl)
-        : base(
-              version,
-              recordId,
-              date,
-              digestFactory: digestFactory)
-    {
-        BaseUrl = baseUrl;
-    }
-
-    public Uri BaseUrl { get; }
+    public Uri BaseUrl { get; } = baseUrl;
 
     protected override void Set(string field, string value)
     {

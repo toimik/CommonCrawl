@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2022 nurhafiz@hotmail.sg
+ * Copyright 2021-2024 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,42 +28,26 @@ using Toimik.WarcProtocol;
 /// Represents a <see cref="Streamer{T}"/> that uses <see cref="WarcParser"/> from the
 /// <c>Toimik.WarcProtocol</c> nuget package.
 /// </summary>
-public class WarcParserStreamer : Streamer<Record>
+/// <remarks>Initializes a new instance of the <see cref="WarcParserStreamer"/> class.</remarks>
+/// <param name="httpClient">Reference for <see cref="Streamer{T}.HttpClient"/>.</param>
+/// <param name="parser">Reference for <see cref="Parser"/>.</param>
+/// <param name="parseLog">Reference for <see cref="ParseLog"/>.</param>
+public class WarcParserStreamer(
+    HttpClient httpClient,
+    WarcParser parser,
+    IParseLog parseLog) : Streamer<Record>(httpClient)
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="WarcParserStreamer"/> class.
-    /// </summary>
-    /// <param name="httpClient">
-    /// Reference for <see cref="Streamer{T}.HttpClient"/>.
-    /// </param>
-    /// <param name="parser">
-    /// Reference for <see cref="Parser"/>.
-    /// </param>
-    /// <param name="parseLog">
-    /// Reference for <see cref="ParseLog"/>.
-    /// </param>
-    public WarcParserStreamer(
-        HttpClient httpClient,
-        WarcParser parser,
-        IParseLog parseLog)
-        : base(httpClient)
-    {
-        Parser = parser;
-        ParseLog = parseLog;
-    }
-
-    /// <summary>
     /// Gets, for this instance, the <see cref="IParseLog"/> used to consume all errors and / or
-    /// skipped chunks when parsing the datasets. If this is <c>null</c>, streaming terminates
-    /// on the first parsing error.
+    /// skipped chunks when parsing the datasets. If this is <c>null</c>, streaming terminates on
+    /// the first parsing error.
     /// </summary>
-    public IParseLog ParseLog { get; }
+    public IParseLog ParseLog { get; } = parseLog;
 
     /// <summary>
-    /// Gets, for this instance, the <see cref="WarcParser"/> used to parse records from the
-    /// datasets.
+    /// Gets, for this instance, the <see cref="WarcParser"/> used to parse records from the datasets.
     /// </summary>
-    public WarcParser Parser { get; }
+    public WarcParser Parser { get; } = parser;
 
     protected override Stream Decompress(Stream stream)
     {

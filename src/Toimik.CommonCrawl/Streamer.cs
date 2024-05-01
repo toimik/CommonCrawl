@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2022 nurhafiz@hotmail.sg
+ * Copyright 2021-2024 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,65 +28,46 @@ using System.Threading.Tasks;
 /// <summary>
 /// Represents a class that streams the Common Crawl - www.commoncrawl.org - crawl archive.
 /// </summary>
-/// <typeparam name="T">
-/// The generic type.
-/// </typeparam>
+/// <typeparam name="T">The generic type.</typeparam>
 /// <remarks>
 /// Common Crawl provides free monthly data dump of their web crawl. Each file is large and the
-/// cumulative size adds up to petabytes. As such, it is more practical and time-saving to
-/// process those files via streaming instead of downloading them first.
+/// cumulative size adds up to petabytes. As such, it is more practical and time-saving to process
+/// those files via streaming instead of downloading them first.
 /// </remarks>
-public abstract class Streamer<T>
+/// <remarks>
+/// Initializes a new instance of the <see cref="Streamer{T}"/> class that streams over HTTPS.
+/// </remarks>
+/// <param name="httpClient">The <see cref="HttpClient"/> used to make HTTP requests.</param>
+public abstract class Streamer<T>(HttpClient httpClient)
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Streamer{T}"/> class that streams over
-    /// HTTPS.
-    /// </summary>
-    /// <param name="httpClient">
-    /// The <see cref="HttpClient"/> used to make HTTP requests.
-    /// </param>
-    protected Streamer(HttpClient httpClient)
-    {
-        HttpClient = httpClient;
-    }
-
-    public HttpClient HttpClient { get; }
+    public HttpClient HttpClient { get; } = httpClient;
 
     /// <summary>
-    /// Streams, for this instance, the records found in every dataset hosted at the specified
-    /// HTTPS location.
+    /// Streams, for this instance, the records found in every dataset hosted at the specified HTTPS location.
     /// </summary>
-    /// <param name="hostname">
-    /// The hostname where the datasets are located. e.g. <c>commoncrawl.s3.amazonaws.com</c>.
-    /// </param>
+    /// <param name="hostname">The hostname where the datasets are located. e.g. <c>commoncrawl.s3.amazonaws.com</c>.</param>
     /// <param name="urlSegmentList">
-    /// The case-sensitive path where the URL segment list is located. e.g.
-    /// <c>/crawl-data/CC-MAIN-YYYY-WW/[warc|wat|wet].paths.gz</c>.
+    /// The case-sensitive path where the URL segment list is located. e.g. <c>/crawl-data/CC-MAIN-YYYY-WW/[warc|wat|wet].paths.gz</c>.
     /// </param>
     /// <param name="urlSegmentOffset">
     /// The zero-based offset of the URL segment to start processing from. This is useful to
-    /// continue from a previous stream. If this is negative, it defaults to <c>0</c>. The
-    /// default is <c>0</c>.
+    /// continue from a previous stream. If this is negative, it defaults to <c>0</c>. The default
+    /// is <c>0</c>.
     /// </param>
     /// <param name="recordSegmentOffset">
     /// The zero-based offset of the record segment to start processing from. This is useful to
-    /// continue from a previous stream. If this is negative, it defaults to <c>0</c>. The
-    /// default is <c>0</c>.
+    /// continue from a previous stream. If this is negative, it defaults to <c>0</c>. The default
+    /// is <c>0</c>.
     /// </param>
-    /// <param name="cancellationToken">
-    /// Optional token to monitor for cancellation request.
-    /// </param>
-    /// <returns>
-    /// Enumerable of <see cref="Result"/>.
-    /// </returns>
+    /// <param name="cancellationToken">Optional token to monitor for cancellation request.</param>
+    /// <returns>Enumerable of <see cref="Result"/>.</returns>
     /// <remarks>
-    /// The file at <c>https://[ <paramref name="hostname"/> ][
-    /// <paramref name="urlSegmentList"/> ]</c> contains one <c>path</c> per line. When formed
-    /// into a URL - <c>https://[ <paramref name="hostname"/> ][path]</c>, each one points to a
-    /// dataset.
+    /// The file at <c>https://[ <paramref name="hostname"/> ][ <paramref name="urlSegmentList"/>
+    /// ]</c> contains one <c>path</c> per line. When formed into a URL - <c>https://[ <paramref
+    /// name="hostname"/> ][path]</c>, each one points to a dataset.
     /// </remarks>
-    // NOTE: Parallelism is not built-in so as to not overload the Common Crawl server, which
-    // has limited resources due to its non-profit nature
+    // NOTE: Parallelism is not built-in so as to not overload the Common Crawl server, which has
+    // limited resources due to its non-profit nature
     public async IAsyncEnumerable<Result> Stream(
         string hostname,
         string urlSegmentList,
@@ -178,16 +159,10 @@ public abstract class Streamer<T>
 
     protected abstract IAsyncEnumerable<Result> Stream(Segment<string> urlSegment, CancellationToken cancellationToken);
 
-    public readonly struct Result
+    public readonly struct Result(Segment<string> urlSegment, Segment<T> recordSegment)
     {
-        public Result(Segment<string> urlSegment, Segment<T> recordSegment)
-        {
-            UrlSegment = urlSegment;
-            RecordSegment = recordSegment;
-        }
+        public Segment<T> RecordSegment { get; } = recordSegment;
 
-        public Segment<T> RecordSegment { get; }
-
-        public Segment<string> UrlSegment { get; }
+        public Segment<string> UrlSegment { get; } = urlSegment;
     }
 }

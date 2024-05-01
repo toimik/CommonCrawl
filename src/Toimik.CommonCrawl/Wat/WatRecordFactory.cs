@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2022 nurhafiz@hotmail.sg
+ * Copyright 2021-2024 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,22 +19,16 @@ namespace Toimik.CommonCrawl;
 using System;
 using Toimik.WarcProtocol;
 
-public class WatRecordFactory : RecordFactory
+public class WatRecordFactory(
+    string hostname,
+    DigestFactory? digestFactory = null,
+    PayloadTypeIdentifier? payloadTypeIdentifier = null) : RecordFactory(
+        digestFactory,
+        payloadTypeIdentifier)
 {
     private bool isFirstMetadataRecord = true;
 
-    public WatRecordFactory(
-        string hostname,
-        DigestFactory? digestFactory = null,
-        PayloadTypeIdentifier? payloadTypeIdentifier = null)
-        : base(
-              digestFactory,
-              payloadTypeIdentifier)
-    {
-        Hostname = hostname;
-    }
-
-    public string Hostname { get; }
+    public string Hostname { get; } = hostname;
 
     public override Record CreateRecord(
         string version,
@@ -56,8 +50,8 @@ public class WatRecordFactory : RecordFactory
                 }
                 else
                 {
-                    // The first metadata record may be problematic because its WARC-Target-URI
-                    // uses a relative URL. This class takes care of that.
+                    // The first metadata record may be problematic because its WARC-Target-URI uses
+                    // a relative URL. This class takes care of that.
                     record = new WatMetadataRecord(
                         version,
                         recordId,
