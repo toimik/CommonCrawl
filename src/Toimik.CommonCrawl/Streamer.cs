@@ -89,7 +89,7 @@ public abstract class Streamer<T>(HttpClient httpClient)
         if (urlSegmentOffset == 0)
         {
             index = 0;
-            dataUrl = await reader.ReadLineAsync().ConfigureAwait(false);
+            dataUrl = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false);
         }
         else
         {
@@ -100,10 +100,10 @@ public abstract class Streamer<T>(HttpClient httpClient)
 
             for (index = 0; index < urlSegmentOffset; index++)
             {
-                await reader.ReadLineAsync().ConfigureAwait(false);
+                await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false);
             }
 
-            dataUrl = await reader.ReadLineAsync().ConfigureAwait(false);
+            dataUrl = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false);
             if (dataUrl == null)
             {
                 throw new ArgumentException($"Invalid {nameof(urlSegmentOffset)}.");
@@ -130,7 +130,7 @@ public abstract class Streamer<T>(HttpClient httpClient)
 
         // Stream the rest of the records from the rest of the segments
         string? line;
-        while ((line = await reader.ReadLineAsync().ConfigureAwait(false)) != null)
+        while ((line = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false)) != null)
         {
             dataUrl = $"https://{hostname}/{line}";
             await foreach (Result result in Stream(new Segment<string>(index, dataUrl), cancellationToken).ConfigureAwait(false))
