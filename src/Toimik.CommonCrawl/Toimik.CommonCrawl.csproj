@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AssemblyName>Toimik.CommonCrawl</AssemblyName>
-    <PackageVersion>0.4.2</PackageVersion>
+    <PackageVersion>0.5.0</PackageVersion>
     <Authors>Nurhafiz</Authors>
-    <Version>0.4.2</Version>
+    <Version>0.5.0</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>Toimik</Company>
     <Description>
@@ -30,7 +30,7 @@
     </PackageReference>
     <PackageReference Include="System.Linq.Async" Version="6.0.1" />
     <PackageReference Include="System.Text.Json" Version="8.0.3" />
-    <PackageReference Include="Toimik.WarcProtocol" Version="0.9.0" />
+    <PackageReference Include="Toimik.WarcProtocol" Version="0.10.0" />
   </ItemGroup>
 
 </Project>

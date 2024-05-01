@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <StartupObject>Toimik.CommonCrawl.Samples.StreamerProgram</StartupObject>
   </PropertyGroup>
@@ -12,7 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Toimik.WarcProtocol" Version="0.9.0" />
+    <PackageReference Include="Toimik.WarcProtocol" Version="0.10.0" />
   </ItemGroup>
 
   <ItemGroup>
