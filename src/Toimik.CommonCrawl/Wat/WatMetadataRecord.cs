@@ -30,7 +30,7 @@ public class WatMetadataRecord(
     string version,
     Uri recordId,
     DateTime date,
-    DigestFactory digestFactory,
+    DigestFactory? digestFactory,
     Uri baseUrl) : MetadataRecord(
         version,
         recordId,
