@@ -1,13 +1,13 @@
 ﻿namespace Toimik.CommonCrawl.Tests;
 
+using Moq;
+using Moq.Protected;
 using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Moq;
-using Moq.Protected;
 using Toimik.WarcProtocol;
 using Xunit;
 
@@ -59,7 +59,7 @@ public class WarcParserStreamerTest
             Hostname,
             urlSegmentList: "/foobar",
             urlSegmentOffset: urlSegmentOffset,
-            recordSegmentOffset: recordSegmentOffset).ToListAsync().ConfigureAwait(false);
+            recordSegmentOffset: recordSegmentOffset).ToListAsync();
 
         var streamResult = results[0];
         Assert.Equal($"https://{Hostname}/warcinfo.warc", streamResult.UrlSegment.Value);
@@ -122,7 +122,7 @@ public class WarcParserStreamerTest
         var results = await streamer.Stream(
             Hostname,
             urlSegmentList: "/foobar",
-            urlSegmentOffset: 1).ToListAsync().ConfigureAwait(false);
+            urlSegmentOffset: 1).ToListAsync();
 
         var streamResult = results[0];
         Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
@@ -174,7 +174,7 @@ public class WarcParserStreamerTest
         var results = await streamer.Stream(
             Hostname,
             urlSegmentList: "/foobar",
-            urlSegmentOffset: 2).ToListAsync().ConfigureAwait(false);
+            urlSegmentOffset: 2).ToListAsync();
 
         var streamResult = results[0];
         Assert.Equal($"https://{Hostname}/metadata.warc", streamResult.UrlSegment.Value);
@@ -208,7 +208,7 @@ public class WarcParserStreamerTest
             hostname: "www.example.com",
             urlSegmentList: "/foobar",
             urlSegmentOffset: 2,
-            recordSegmentOffset: 1).ToListAsync().ConfigureAwait(false);
+            recordSegmentOffset: 1).ToListAsync();
 
         Assert.Empty(results);
     }
@@ -234,7 +234,7 @@ public class WarcParserStreamerTest
             await streamer.Stream(
                 hostname: "www.example.com",
                 urlSegmentList: "/foobar",
-                urlSegmentOffset: 3).ToListAsync().ConfigureAwait(false)).ConfigureAwait(false);
+                urlSegmentOffset: 3).ToListAsync());
     }
 
     [Fact]
@@ -268,7 +268,7 @@ public class WarcParserStreamerTest
             Hostname,
             urlSegmentList: "/foobar",
             urlSegmentOffset: 1,
-            recordSegmentOffset: 1).ToListAsync().ConfigureAwait(false);
+            recordSegmentOffset: 1).ToListAsync();
 
         var streamResult = results[0];
         Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);
@@ -320,7 +320,7 @@ public class WarcParserStreamerTest
             Hostname,
             urlSegmentList: "/foobar",
             urlSegmentOffset: 1,
-            recordSegmentOffset: 2).ToListAsync().ConfigureAwait(false);
+            recordSegmentOffset: 2).ToListAsync();
 
         var streamResult = results[0];
         Assert.Equal($"https://{Hostname}/conversion.warc", streamResult.UrlSegment.Value);

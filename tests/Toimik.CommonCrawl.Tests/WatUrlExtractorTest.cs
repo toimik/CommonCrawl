@@ -1,13 +1,13 @@
 ﻿namespace Toimik.CommonCrawl.Tests;
 
+using Moq;
+using Moq.Protected;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Moq;
-using Moq.Protected;
 using Xunit;
 
 /* NOTE: Only offsets are tested because the other arguments are already covered by WarcParserStreamerTest */
@@ -48,7 +48,7 @@ public abstract class WatUrlExtractorTest<T>
         const string Hostname = "www.example.com";
         var extractor = CreateExtractor(messageHandlerMock.Object, Hostname);
 
-        var results = await extractor.Extract(Hostname, urlSegmentList: "/foobar").ToListAsync().ConfigureAwait(false);
+        var results = await extractor.Extract(Hostname, urlSegmentList: "/foobar").ToListAsync();
 
         Assert.Empty(results);
     }
@@ -89,7 +89,7 @@ public abstract class WatUrlExtractorTest<T>
         var results = await extractor.Extract(
             Hostname,
             urlSegmentList: "/foobar",
-            entryOffset: entryOffset).ToListAsync().ConfigureAwait(false);
+            entryOffset: entryOffset).ToListAsync();
 
         Assert.Empty(results);
     }
@@ -129,8 +129,7 @@ public abstract class WatUrlExtractorTest<T>
         var extractor = CreateExtractor(messageHandlerMock.Object, Hostname);
         var expectedUrls = new List<string>
         {
-            // metadata.warc is read but does not yield any URLs because the WARC-Target-Uri is
-            // relative
+            // metadata.warc is read but does not yield any URLs because the WARC-Target-Uri is relative
 
             // From metadata2.warc
             "http://www.example.com",
@@ -146,7 +145,7 @@ public abstract class WatUrlExtractorTest<T>
         var results = await extractor.Extract(
             Hostname,
             urlSegmentList: "/foobar",
-            entryOffset: entryOffset).ToListAsync().ConfigureAwait(false);
+            entryOffset: entryOffset).ToListAsync();
 
         for (int i = 0; i < results.Count; i++)
         {
@@ -190,13 +189,13 @@ public abstract class WatUrlExtractorTest<T>
         const string Hostname = "www.example.com";
         var extractor = CreateExtractor(messageHandlerMock.Object, Hostname);
 
-        // The offset does not take into account the one URL in metadata.warc because that URL
-        // is skipped as it is a relative one
+        // The offset does not take into account the one URL in metadata.warc because that URL is
+        // skipped as it is a relative one
         var entryOffset = 7;
         var results = await extractor.Extract(
             Hostname,
             urlSegmentList: "/foobar",
-            entryOffset: entryOffset).ToListAsync().ConfigureAwait(false);
+            entryOffset: entryOffset).ToListAsync();
 
         var result = results[0];
         Assert.Equal(entryOffset, result.Index);
@@ -231,7 +230,7 @@ public abstract class WatUrlExtractorTest<T>
         const string Hostname = "www.example.com";
         var extractor = CreateExtractor(messageHandlerMock.Object, Hostname);
 
-        var results = await extractor.Extract(Hostname, urlSegmentList: "/foobar").ToListAsync().ConfigureAwait(false);
+        var results = await extractor.Extract(Hostname, urlSegmentList: "/foobar").ToListAsync();
 
         var result = results[0];
         Assert.Equal(0, result.Index);
@@ -260,7 +259,7 @@ public abstract class WatUrlExtractorTest<T>
         const string Hostname = "www.example.com";
         var extractor = CreateExtractor(messageHandlerMock.Object, Hostname);
 
-        var results = await extractor.Extract(Hostname, urlSegmentList: "/foobar").ToListAsync().ConfigureAwait(false);
+        var results = await extractor.Extract(Hostname, urlSegmentList: "/foobar").ToListAsync();
 
         Assert.Empty(results);
     }
