@@ -42,7 +42,7 @@ public class WarcParserWatUrlExtractor(WarcParserStreamer streamer) : WatUrlExtr
         else
         {
             // Remove leading slash, if any
-            var index = suffix.StartsWith("/")
+            var index = suffix.StartsWith('/')
                 ? 1
                 : 0;
             url = $"{baseUrl}{suffix[index..]}";
