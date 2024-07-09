@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2022 nurhafiz@hotmail.sg
+ * Copyright 2021-2024 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-public abstract class WatUrlExtractor<T>
+public abstract class WatUrlExtractor<T>(Streamer<T> streamer)
 {
-    protected WatUrlExtractor(Streamer<T> streamer)
-    {
-        Streamer = streamer;
-    }
-
-    public Streamer<T> Streamer { get; }
+    public Streamer<T> Streamer { get; } = streamer;
 
     // NOTE: See Streamer.Stream(...) for the documentation of most of the arguments
     public async IAsyncEnumerable<Result> Extract(
@@ -109,22 +104,14 @@ public abstract class WatUrlExtractor<T>
 
     protected abstract IEnumerable<string> ExtractUrls(Streamer<T>.Result result);
 
-    public readonly struct Result
+    public readonly struct Result(int index, string url)
     {
-        public Result(int index, string url)
-        {
-            Index = index;
-            Url = url;
-        }
-
-        public int Index { get; }
+        public int Index { get; } = index;
 
         /// <summary>
         /// Gets, for this instance, the URL.
         /// </summary>
-        /// <remarks>
-        /// The value may be absolute, comes without a scheme, or comes with any scheme.
-        /// </remarks>
-        public string Url { get; }
+        /// <remarks>The value may be absolute, comes without a scheme, or comes with any scheme.</remarks>
+        public string Url { get; } = url;
     }
 }
