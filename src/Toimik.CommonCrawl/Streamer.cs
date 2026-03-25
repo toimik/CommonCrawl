@@ -103,11 +103,7 @@ public abstract class Streamer<T>(HttpClient httpClient)
                 await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false);
             }
 
-            dataUrl = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false);
-            if (dataUrl == null)
-            {
-                throw new ArgumentException($"Invalid {nameof(urlSegmentOffset)}.");
-            }
+            dataUrl = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false) ?? throw new ArgumentException($"Invalid {nameof(urlSegmentOffset)}.");
         }
 
         dataUrl = $"https://{hostname}/{dataUrl}";

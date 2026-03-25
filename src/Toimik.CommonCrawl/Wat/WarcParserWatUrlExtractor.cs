@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Toimik.CommonCrawl;
+namespace Toimik.CommonCrawl.Wat;
 
 using System;
 using System.Collections.Generic;

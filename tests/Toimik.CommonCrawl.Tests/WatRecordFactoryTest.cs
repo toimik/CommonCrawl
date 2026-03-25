@@ -1,6 +1,7 @@
 ﻿namespace Toimik.CommonCrawl.Tests;
 
 using System;
+using Toimik.CommonCrawl.Wat;
 using Toimik.WarcProtocol;
 using Xunit;
 
