@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-namespace Toimik.CommonCrawl;
+namespace Toimik.CommonCrawl.Wat;
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -50,7 +50,7 @@ public abstract class WatUrlExtractor<T>(Streamer<T> streamer)
         if (entryOffset > 0)
         {
             IEnumerator<string>? urlEnumerator = null;
-            while (await resultEnumerator.MoveNextAsync(cancellationToken).ConfigureAwait(false))
+            while (await resultEnumerator.MoveNextAsync().ConfigureAwait(false))
             {
                 var result = resultEnumerator.Current;
                 var urls = ExtractUrls(result);
@@ -89,7 +89,7 @@ public abstract class WatUrlExtractor<T>(Streamer<T> streamer)
         }
 
         // Yield, if any, the rest of the URLs
-        while (await resultEnumerator.MoveNextAsync(cancellationToken).ConfigureAwait(false))
+        while (await resultEnumerator.MoveNextAsync().ConfigureAwait(false))
         {
             var result = resultEnumerator.Current;
             var urls = ExtractUrls(result);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Toimik.CommonCrawl.Wat;
 using Xunit;
 
 /* NOTE: Only offsets are tested because the other arguments are already covered by WarcParserStreamerTest */

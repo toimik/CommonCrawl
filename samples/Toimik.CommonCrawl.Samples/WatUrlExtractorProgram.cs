@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Toimik.CommonCrawl.Wat;
 using Toimik.WarcProtocol;
 
 public class WatUrlExtractorProgram
