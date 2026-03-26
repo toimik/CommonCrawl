@@ -2,7 +2,7 @@
 
 using System;
 using Toimik.CommonCrawl.Wat;
-using Toimik.WarcProtocol;
+using Toimik.WarcProtocol.Records;
 using Xunit;
 
 public class WatRecordFactoryTest

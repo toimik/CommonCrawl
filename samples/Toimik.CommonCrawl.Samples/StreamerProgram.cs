@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Toimik.WarcProtocol;
+using Toimik.WarcProtocol.Records;
 
 public class StreamerProgram
 {
@@ -14,8 +15,7 @@ public class StreamerProgram
             new WarcParser(),
             new DebugParseLog());
 
-        // The example below uses October 2021's dataset. Other datasets are found at
-        // https://commoncrawl.org/the-data/get-started.
+        // The example below uses October 2021's dataset. Other datasets are found at https://commoncrawl.org/the-data/get-started.
         var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/warc.paths.gz";
 
         // var urlSegmentList = "/crawl-data/CC-MAIN-2021-43/wat.paths.gz";

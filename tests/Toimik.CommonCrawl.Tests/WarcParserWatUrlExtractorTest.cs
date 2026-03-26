@@ -4,6 +4,7 @@ using System.Net.Http;
 using Toimik.CommonCrawl;
 using Toimik.CommonCrawl.Wat;
 using Toimik.WarcProtocol;
+using Toimik.WarcProtocol.Records;
 
 public class WarcParserWatUrlExtractorTest : WatUrlExtractorTest<Record>
 {

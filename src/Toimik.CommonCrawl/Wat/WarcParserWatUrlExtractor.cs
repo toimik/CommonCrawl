@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2024 nurhafiz@hotmail.sg
+ * Copyright 2021-2026 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ namespace Toimik.CommonCrawl.Wat;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Toimik.WarcProtocol;
+using Toimik.WarcProtocol.Records;
 
 public class WarcParserWatUrlExtractor(WarcParserStreamer streamer) : WatUrlExtractor<Record>(streamer)
 {

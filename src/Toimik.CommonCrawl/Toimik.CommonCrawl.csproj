@@ -6,7 +6,7 @@
     <AssemblyName>Toimik.CommonCrawl</AssemblyName>
     <PackageVersion>0.6.0</PackageVersion>
     <Authors>Nurhafiz</Authors>
-    <Version>0.6.0</Version>
+    <Version>0.6.1</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Company>Toimik</Company>
     <Description>
@@ -28,7 +28,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Toimik.WarcProtocol" Version="0.10.0" />
+    <PackageReference Include="Toimik.WarcProtocol" Version="0.11.0" />
   </ItemGroup>
 
 </Project>

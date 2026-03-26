@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2024 nurhafiz@hotmail.sg
+ * Copyright 2021-2026 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Toimik.WarcProtocol;
+using Toimik.WarcProtocol.Records;
 
 /// <summary>
 /// Represents a <see cref="Streamer{T}"/> that uses <see cref="WarcParser"/> from the

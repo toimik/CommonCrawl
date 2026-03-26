@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2021-2024 nurhafiz@hotmail.sg
+ * Copyright 2021-2026 nurhafiz@hotmail.sg
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ namespace Toimik.CommonCrawl.Wat;
 
 using System;
 using Toimik.WarcProtocol;
+using Toimik.WarcProtocol.Records;
 
 public class WatRecordFactory(
     string hostname,
